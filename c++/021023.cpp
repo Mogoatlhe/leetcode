@@ -1,9 +1,7 @@
 class Solution {
 public:
     bool winnerOfGame(string colors) {
-        bool isAlice = true;
-        int nextStartingPoint = 0;
-        bool isNextStartingPointSet = false;
+        int alice = 0, bob = 0;
 
         if (colors.length() < 3)
             return false;
@@ -14,40 +12,14 @@ public:
             char next = colors[i + 1];
             
             if (curr == prev && curr == next){
-                if (isAlice){
-                    if(curr != 'A' && !isNextStartingPointSet){
-                        nextStartingPoint = i;
-                        isNextStartingPointSet = true; 
-                    } else if(curr == 'A'){
-                        if (!isNextStartingPointSet)
-                            nextStartingPoint = i;
-                        colors.erase(i, 1);
-                        i = nextStartingPoint - 1;
-                        isAlice = !isAlice;
-                        isNextStartingPointSet = false;
-                    }
-                } else {
-                    if(curr != 'B' && !isNextStartingPointSet){
-                        nextStartingPoint = i;
-                        isNextStartingPointSet = true; 
-                    } else if(curr == 'B'){
-                        if (!isNextStartingPointSet)
-                            nextStartingPoint = i;
-                        colors.erase(i, 1);
-                        i = nextStartingPoint - 1;
-                        isAlice = !isAlice;
-                        isNextStartingPointSet = false;
-                    }   
-                }
+                if (curr == 'A')
+                    alice += 1;
+                else bob += 1;
             }
-            
-            if (i == colors.length() - 2 && colors.length() > 2)
-                isAlice = !isAlice;
         }
 
-        if (colors.length() < 3)
-            isAlice = !isAlice;
+        if (alice > bob) return true;
 
-        return isAlice;
+        return false;
     }
 };
